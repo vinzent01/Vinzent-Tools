@@ -58,6 +58,7 @@
             <li>Armazenar informações de maneira simples e prática.</li>
         </ul>
     
+        <p>O Bloco de Notas é ideal para quem precisa de uma ferramenta simples para escrever e armazenar informações sem complicação. Ao salvar o texto em um arquivo <code>.txt</code>, você garante que seu conteúdo será facilmente acessível e portátil. Não há necessidade de registros ou configuração, apenas escreva e salve!</p>
     </section>
 </main>
 
@@ -80,7 +81,7 @@
         const content = $("#text-content").val();
 
         if (title == "")
-           title = "file.txt" 
+           title = "file.txt";
 
         download(title+".txt", content);
     })

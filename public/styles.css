@@ -203,6 +203,8 @@ button:hover {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    align-items: center;
+    justify-content: space-between; /* Alinha itens com espaço entre eles */
 }
 
 .vertical {
@@ -213,4 +215,10 @@ button:hover {
 
 .img-invert {
     filter: invert(1);
+}
+
+select {
+    background-color: white;
+    border-radius: 5px;
+    padding-left: 10px;
 }

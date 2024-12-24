@@ -5,7 +5,11 @@
     "compression": "^1.7.5",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "html-minifier": "^4.0.0",
+    "html-uglify": "^1.2.1",
     "marked": "^15.0.4",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "prettyugly": "^0.0.5",
+    "uglify-js": "^3.19.3"
   }
 }
