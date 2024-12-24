@@ -57,18 +57,28 @@
         const format = $("#code-format").val();
         var code = $("#input").val();
 
-        $.post("/api/minify", { 
-            content : code,
-            type : format
-        })
+        fetch("/api/minify", {
+            method : "POST",
+            headers: { "Content-Type": "application/json" },
+            body : JSON.stringify({ 
+                content : code,
+                type : format
+            })
+        }
+        )
             .then( (response) => response.json())
             .then( (data ) => {
-                alert("A");
-                $("#message").text("");
-                $("#output").val(data.output);
+
+                if (data.success){
+                    alert("A");
+                    $("#message").text("");
+                    $("#output").val(data.output);
+                }
+                else {
+                    $("#message").text("Ocorreu um erro durante o processo");
+                }
             })
             .catch( (error) => {
-                alert("B");
                 $("#message").text("Ocorreu um erro durante o processo");
             })
             
