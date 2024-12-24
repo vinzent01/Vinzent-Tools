@@ -1,0 +1,70 @@
+<main>
+    <section class="character-generator">
+        <div class="container">
+            <h2>Gerador de Personagens RPG</h2>
+            <p>Crie um personagem de RPG único com o nosso gerador de personagens. Clique no botão abaixo para gerar um personagem completo com nome, aparência, traços de personalidade e muito mais!</p>
+        
+            <button id="generate-character-btn">Gerar Personagem</button>
+        
+            <div id="character-details" class="character-details">
+                <h3>Detalhes do Personagem:</h3>
+                <p><strong>Nome:</strong> <span id="character-name"></span></p>
+                <p><strong>Aparência Física:</strong> <span id="character-appearance"></span></p>
+                <p><strong>Traços de Personalidade:</strong> <span id="character-personality"></span></p>
+                <p><strong>Características:</strong> <span id="character-traits"></span></p>
+                <p><strong>História de Fundo:</strong> <span id="character-backstory"></span></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+
+document.getElementById('generate-character-btn').addEventListener('click', function() {
+    const names = ['Thorin Oakenshield', 'Eldrin Stormrider', 'Aria Silverleaf', 'Gorath Ironfist', 'Lyra Moonshadow'];
+    const appearances = [
+        'Alta e musculosa, com olhos azuis e cabelo loiro escuro, com uma cicatriz no rosto.',
+        'Baixo e ágil, com pele pálida, cabelo negro e olhos verdes brilhantes.',
+        'Elegante e esbelta, com cabelos castanhos e olhos castanhos claros, com vestes leves e adornos de prata.',
+        'Fortão e robusto, com barba espessa, cabelo vermelho e uma tatuagem de dragão no braço.',
+        'Média estatura, com pele escura, olhos dourados e cabelo trançado com penas e contas.'
+    ];
+    const personalities = [
+        'Corajoso, mas impulsivo, tende a agir antes de pensar.',
+        'Calmo e calculista, sempre ponderando as opções antes de agir.',
+        'Sociável e amigável, sempre buscando fazer amigos e evitar conflitos.',
+        'Melancólico e introvertido, preferindo passar tempo sozinho ou com poucas pessoas de confiança.',
+        'Honesto e justo, sempre tentando fazer o que é certo, mesmo quando isso é difícil.'
+    ];
+    const traits = [
+        'Destreza excepcional com arcos e flechas.',
+        'Incredível força física, capaz de levantar grandes pesos.',
+        'Grande habilidade em magia, especialmente encantamentos.',
+        'Agilidade incrível e reflexos rápidos.',
+        'Conhecimento em táticas de batalha e liderança.'
+    ];
+    const backstories = [
+        'Cresceu em uma pequena aldeia, treinando com o pai na arte do arco e flecha. Após a destruição da aldeia, partiu em busca de vingança.',
+        'Um nobre caído, perdeu sua fortuna após uma traição, agora vive como um mercenário tentando recuperar seu status.',
+        'Uma jovem ladra que foi criada nas ruas. Com habilidades rápidas, é especializada em furtos e trapaceios.',
+        'Um guerreiro de um clã antigo, mas agora exilado após um conflito com os outros membros. Busca redenção e um novo propósito.',
+        'Uma aprendiz de mago que viajou por várias terras em busca de artefatos antigos. Está em uma missão para desvendar os mistérios do seu poder.'
+    ];
+
+    const name = names[Math.floor(Math.random() * names.length)];
+    const appearance = appearances[Math.floor(Math.random() * appearances.length)];
+    const personality = personalities[Math.floor(Math.random() * personalities.length)];
+    const trait = traits[Math.floor(Math.random() * traits.length)];
+    const backstory = backstories[Math.floor(Math.random() * backstories.length)];
+
+    // Exibindo o personagem gerado
+    document.getElementById('character-name').textContent = name;
+    document.getElementById('character-appearance').textContent = appearance;
+    document.getElementById('character-personality').textContent = personality;
+    document.getElementById('character-traits').textContent = trait;
+    document.getElementById('character-backstory').textContent = backstory;
+
+    // Exibindo os detalhes
+    document.getElementById('character-details').style.display = 'block';
+}); 
+</script>

@@ -1,0 +1,104 @@
+<main>
+
+    <div class="container md center">
+        <h1>Gerador de Senha Segura</h1>
+        
+        <input type="checkbox" id="letras-maiusculas" name="letras maiúsculas" value="letras-maiusculas" checked>
+        <label for="letras-maiusculas"> Letras maiúsculas</label><br>
+
+        <input type="checkbox" id="letras-minusculas" name="letras minusculas" value="letras-minusculas" checked>
+        <label for="letras-minusculas"> Letras minúsculas</label><br>
+
+        <input type="checkbox" id="numeros" name="números" value="numeros" checked>
+        <label for="numeros">Números</label><br>
+
+        <input type="checkbox" id="caracteres-especiais" name="caracteres especiais" value="caracteres-especiais" checked>
+        <label for="caracteres-especiais">Caracteres especiais</label><br>
+
+        <p>Escolha o comprimento da senha:</p>
+        <input type="number" id="passwordLength" value="16" min="8" max="32">
+        <button onclick="generatePassword()">Gerar Senha</button>
+
+        <p class="password" id="generatedPassword">Aqui aparecerá a senha gerada.</p>
+    </div>
+    
+    <section class="center">
+        <h2>Sobre o Gerador de Senhas Seguras</h2>
+        <p>
+            Bem-vindo ao nosso gerador de senhas seguras e fortes! 
+            Este serviço foi projetado para ajudá-lo a criar senhas robustas e personalizadas, garantindo a proteção de suas contas e informações sensíveis. 
+            Sabemos como é importante manter sua segurança online, e é por isso que oferecemos uma ferramenta simples, eficaz e gratuita.
+        </p>
+        <h3>Por que usar senhas seguras?</h3>
+        <p>
+            Senhas fortes são fundamentais para proteger seus dados contra hackers e acessos não autorizados. 
+            Elas devem ser difíceis de adivinhar, contendo uma combinação de letras maiúsculas e minúsculas, números e caracteres especiais. 
+            Com nossa ferramenta, você pode gerar senhas aleatórias com facilidade e personalizar o comprimento de acordo com sua necessidade.
+        </p>
+        <h3>Recursos da nossa ferramenta</h3>
+        <ul>
+            <li>Geração automática de senhas seguras.</li>
+            <li>Personalização do comprimento da senha (8 a 32 caracteres).</li>
+            <li>Combinação de letras, números e caracteres especiais para máxima segurança.</li>
+            <li>Interface simples e intuitiva, sem necessidade de cadastro.</li>
+        </ul>
+        <h3>Como usar o gerador de senhas?</h3>
+        <p>
+            É muito fácil! Basta selecionar o comprimento desejado para sua senha e clicar no botão "Gerar Senha". 
+            Em segundos, você terá uma senha única e altamente segura, pronta para uso em qualquer conta ou serviço online.
+        </p>
+        <h3>Dicas de segurança</h3>
+        <p>
+            - Use uma senha diferente para cada conta importante.<br>
+            - Não compartilhe suas senhas com outras pessoas.<br>
+            - Atualize suas senhas regularmente.<br>
+            - Sempre habilite autenticação de dois fatores, quando disponível.
+        </p>
+        <p>
+            Proteja sua privacidade e segurança digital com nosso gerador de senhas seguras. Experimente agora mesmo!
+        </p>
+    </section>
+    
+    
+</main>
+
+<script>
+    function generatePassword() {
+        const length = document.getElementById('passwordLength').value;
+        let charset = "";
+        let upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        let lowerCase = "abcdefghijklmnopqrstuvwxyz";
+        let numbers = "0123456789";
+        let specialCharacters = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+
+        let hasUpper = document.getElementById("letras-maiusculas").checked;
+        let hasLower = document.getElementById("letras-minusculas").checked;
+        let hasNumbers = document.getElementById("numeros").checked;
+        let hasSpecial = document.getElementById("caracteres-especiais").checked;
+
+        if (hasUpper )
+            charset += upperCase;
+        if (hasLower )
+            charset += lowerCase;
+        if (hasNumbers )
+            charset += numbers;
+        if (hasSpecial )
+            charset += specialCharacters;
+        
+        let password = "";
+
+        if (!hasUpper && !hasLower && !hasNumbers && !hasSpecial){
+            password = "senha invalida, cheque algumas caixas acima"
+        }
+        else {
+            password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+        }
+        
+        document.getElementById('generatedPassword').textContent = password;
+    }
+</script>

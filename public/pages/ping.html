@@ -1,0 +1,102 @@
+<main>
+    <div class="container">
+        <h2>Verifique a Conectividade com um Servidor</h2>
+        <form id="ping-form">
+            <label for="ping-address">Endereço ou IP:</label>
+            <input type="text" id="ping-address" placeholder="Exemplo: google.com ou 8.8.8.8" required>
+            <button type="submit">Testar Ping</button>
+        </form>
+        <div id="ping-result"></div>
+    </div>
+
+    <section id="ping-info">
+        <h2>O que é o comando Ping?</h2>
+        <p>
+            O comando <strong>Ping</strong> é uma ferramenta de rede usada para testar a conectividade entre o seu dispositivo e um servidor ou dispositivo remoto na internet. Ele envia pacotes de dados para o endereço de destino e mede o tempo que leva para receber uma resposta. Essa ferramenta é essencial para diagnósticos de rede e identificação de problemas de conexão.
+        </p>
+    
+        <h3>Como o Ping Funciona?</h3>
+        <p>
+            O Ping utiliza o protocolo ICMP (Internet Control Message Protocol) para enviar mensagens do tipo "echo request" ao destino. Se o dispositivo de destino estiver ativo e acessível, ele responderá com uma mensagem "echo reply". Com base nisso, o Ping fornece informações como:
+        </p>
+        <ul>
+            <li><strong>Latência (tempo de resposta):</strong> Medida em milissegundos, mostra o tempo que um pacote leva para ir e voltar do destino.</li>
+            <li><strong>Pacotes perdidos:</strong> Indica a quantidade de pacotes que não chegaram ao destino ou não receberam resposta.</li>
+            <li><strong>TTL (Time-to-Live):</strong> O número máximo de saltos permitidos antes que o pacote seja descartado.</li>
+        </ul>
+    
+        <h3>Por que o Ping é Importante?</h3>
+        <p>
+            O comando Ping é amplamente usado para:
+        </p>
+        <ul>
+            <li>Verificar se um servidor ou dispositivo está online.</li>
+            <li>Identificar problemas de latência ou perda de pacotes em uma rede.</li>
+            <li>Diagnosticar problemas de conectividade entre dispositivos.</li>
+            <li>Testar a velocidade e estabilidade de conexões de internet.</li>
+        </ul>
+    
+        <h3>Limitações do Comando Ping</h3>
+        <p>
+            Embora útil, o Ping tem algumas limitações:
+        </p>
+        <ul>
+            <li>Alguns servidores ou dispositivos bloqueiam pacotes ICMP, tornando o teste inconclusivo.</li>
+            <li>O Ping não identifica a causa específica de problemas de rede.</li>
+            <li>Não mede a largura de banda ou desempenho completo de uma conexão.</li>
+        </ul>
+    
+        <h3>Como Usar o Ping no Seu Dia a Dia?</h3>
+        <p>
+            Aqui estão algumas dicas práticas para usar o Ping:
+        </p>
+        <ul>
+            <li><strong>Testar sua conexão com a internet:</strong> Use o Ping para verificar a latência de sites como <code>google.com</code>.</li>
+            <li><strong>Diagnosticar redes locais:</strong> Experimente pingar dispositivos na sua rede, como seu roteador.</li>
+            <li><strong>Monitoramento de servidores:</strong> Verifique a disponibilidade de servidores importantes.</li>
+        </ul>
+    
+        <h3>Ferramentas Relacionadas</h3>
+        <p>
+            Além do comando Ping, você pode explorar outras ferramentas de diagnóstico de rede, como:
+        </p>
+        <ul>
+            <li><strong>Traceroute:</strong> Para mapear o caminho que os pacotes seguem até o destino.</li>
+            <li><strong>Netstat:</strong> Para monitorar conexões de rede em tempo real.</li>
+            <li><strong>NSLookup:</strong> Para verificar informações de DNS.</li>
+        </ul>
+    
+        <p>Experimente nossa ferramenta de teste de ping para analisar sua conexão e obter resultados detalhados.</p>
+    </section>
+    
+</main>
+
+
+<script>
+    document.getElementById("ping-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const address = document.getElementById("ping-address").value;
+        const resultElement = document.getElementById("ping-result");
+        const data = JSON.stringify({address});
+
+        resultElement.innerHTML = "Testando conexão...";
+
+        fetch("/api/ping", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: data,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    resultElement.innerHTML = `<pre>${data.output}</pre>`;
+                } else {
+                    resultElement.innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                resultElement.innerHTML = "<p style='color: red;'>Erro ao conectar ao servidor.</p>";
+            });
+    });
+</script>

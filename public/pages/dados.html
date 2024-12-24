@@ -1,0 +1,131 @@
+<main>
+    <section class="roller-container">
+        <div class="container">
+            <h2>Rolagem de Dados</h2>
+    
+            <div>
+                <label for="dice-input">Digite o dado no formato xDy:</label>
+                <input type="text" id="dice-input" placeholder="Exemplo: 2d20, 1d6, 5d100" required>
+                <button id="dice-button" type="submit">Rolar Dados</button>
+            </div>
+    
+            <div id="result-section">
+                <h3>Resultado:</h3>
+                <div id="result-output"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="details-section">
+        <h2>O que são rolagens de dados em RPG?</h2>
+        <p>
+            A rolagem de dados é uma mecânica central nos jogos de RPG (Role-Playing Games). 
+            Ela serve para determinar o sucesso ou fracasso de ações, gerando resultados aleatórios que adicionam 
+            imprevisibilidade e emoção às partidas. 
+            Cada tipo de dado tem um número de lados, sendo os mais comuns: <strong>d4</strong>, <strong>d6</strong>, <strong>d8</strong>, 
+            <strong>d10</strong>, <strong>d12</strong> e <strong>d20</strong>.
+        </p>
+    
+        <h3>Formatos comuns</h3>
+        <ul>
+            <li><strong>1d20:</strong> Usado frequentemente para testes de habilidade, ataques e jogadas de salvamento.</li>
+            <li><strong>2d6:</strong> Popular em sistemas que utilizam dois dados para ações (ex.: sistemas baseados em Apocalypse).</li>
+            <li><strong>4d6:</strong> Comumente usado para gerar atributos de personagens somando os maiores valores.</li>
+        </ul>
+    
+        <h3>Como funciona o formato xDy?</h3>
+        <p>
+            O formato <strong>xDy</strong> é uma notação padrão para rolar dados:
+            <ul>
+                <li><strong>x</strong> é o número de dados que serão rolados.</li>
+                <li><strong>y</strong> é o número de lados do dado.</li>
+            </ul>
+            Por exemplo, <strong>2d6</strong> significa que você está rolando dois dados de seis lados, 
+            e o resultado final será a soma das duas rolagens.
+        </p>
+    
+        <h3>Curiosidades sobre dados</h3>
+        <ul>
+            <li>Os dados poliédricos são derivados de sólidos geométricos conhecidos como sólidos de Platão.</li>
+            <li>O <strong>d20</strong> é amplamente associado ao famoso sistema <em>Dungeons & Dragons</em>.</li>
+            <li>Jogadores experientes muitas vezes têm superstição sobre quais dados usar!</li>
+        </ul>
+    
+        <h3>Ferramenta de rolagem online</h3>
+        <p>
+            Esta página oferece uma ferramenta rápida e prática para rolar qualquer combinação de dados que você precise. 
+            Basta inserir o formato desejado (ex.: <strong>3d10</strong>) e clicar em "Rolar". O resultado será exibido logo abaixo.
+        </p>
+    </section>
+
+    <section class="similar-tools">
+        <h2>Ferramentas Similares</h2>
+        <p>Se você gostou da nossa ferramenta de rolagem de dados, confira outras ferramentas úteis que podem melhorar sua experiência no RPG:</p>
+        
+        <ul>
+            <li>
+                <h3><a href="/gerador-de-personagens">Gerador de Personagens</a></h3>
+                <p>Crie rapidamente personagens com atributos aleatórios para o seu RPG. Ideal para quem precisa de um novo personagem de última hora!</p>
+            </li>
+            <li>
+                <h3><a href="/calculadora-de-dano">Calculadora de Dano</a></h3>
+                <p>Determine o dano causado por um ataque no RPG com base no tipo de arma, modificadores e atributos. Ótimo para mestres e jogadores durante a batalha.</p>
+            </li>
+            <li>
+                <h3><a href="/tabuleiro-virtual">Tabuleiro Virtual</a></h3>
+                <p>Jogue RPGs de mesa com seus amigos online, usando um tabuleiro virtual onde você pode mover peças e usar suas ferramentas de rolagem de dados.</p>
+            </li>
+            <li>
+                <h3><a href="/calculadora-de-iniciativa">Calculadora de Iniciativa</a></h3>
+                <p>Organize rapidamente a ordem de turnos durante o combate de RPG com a nossa ferramenta de calculadora de iniciativa.</p>
+            </li>
+        </ul>
+    
+        <p>Essas ferramentas são projetadas para tornar sua experiência no RPG mais fácil e divertida. Explore-as e torne seus jogos ainda melhores!</p>
+    </section>
+    
+</main>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#dice-button").on("click", function (event) {
+            event.preventDefault();
+
+            const diceInput = $("#dice-input").val().trim();
+            const resultOutput = $("#result-output");
+
+            // Expressão regular para validar o formato xDy
+            const diceRegex = /^(\d+)[dD](\d+)$/;
+            const match = diceRegex.exec(diceInput);
+
+            if (!match) {
+                resultOutput.html("<p style='color:red;'>Formato inválido. Use o formato xDy, exemplo: 2d20 ou 1d6.</p>");
+                return;
+            }
+
+            const rolls = parseInt(match[1], 10); // Número de rolagens (x)
+            const sides = parseInt(match[2], 10); // Número de lados do dado (y)
+
+            if (rolls <= 0 || sides <= 0) {
+                resultOutput.html("<p style='color:red;'>Os valores devem ser maiores que zero.</p>");
+                return;
+            }
+
+            const results = [];
+            let total = 0;
+
+            for (let i = 0; i < rolls; i++) {
+                const roll = Math.floor(Math.random() * sides) + 1;
+                results.push(roll);
+                total += roll;
+            }
+
+            resultOutput.html(`
+                <p><strong>Rolagens:</strong> ${results.join(", ")}</p>
+                <p><strong>Total:</strong> ${total}</p>
+            `);
+        });
+    });
+</script>

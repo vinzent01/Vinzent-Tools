@@ -1,0 +1,210 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    color: #333;
+    margin: 0;
+    min-height: 100vh;
+}
+
+main {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+a {
+    color: #333;
+}
+
+/* nav */
+nav {
+    margin-left: 20px;
+}
+
+
+/* Container */
+.container {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .sm {
+        width: 100%; /* Usa 100% da largura da tela em celulares */
+    }
+    
+    .md {
+        width: 100%; /* Também faz o médio usar 100% em celulares */
+    }
+
+    .big {
+        width: 100%; /* Faz o grande usar 100% em celulares */
+    }
+}
+
+@media (min-width: 769px) {
+    .sm {
+        width: 300px;
+    }
+
+    .md {
+        width: 600px;
+    }
+
+    .big {
+        width: 900px;
+    }
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+input[type="url"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #f00;
+}
+
+/* Estilos para o header */
+.site-header {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem 0;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.kofi-button {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.site-header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.site-header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.site-header nav ul li a:hover {
+    color: #ffcc00;
+}
+
+/* Estilos para o footer */
+.site-footer {
+    background-color: #333; /* Cor de fundo escura */
+    color: #fff; /* Cor do texto clara */
+    padding: 1rem 0; /* Espaçamento interno */
+    text-align: center; /* Centraliza o conteúdo */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    font-size: 1rem;
+}
+
+.site-footer .footer-content {
+    max-width: 1200px; /* Limita a largura do conteúdo */
+    margin: 0 auto; /* Centraliza o conteúdo horizontalmente */
+    padding: 0 1rem;
+}
+
+.site-footer a {
+    color: #fff; /* Cor dos links */
+    text-decoration: none; /* Remove o sublinhado */
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.site-footer a:hover {
+    color: #007bff; /* Cor azul no hover */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .site-footer {
+        padding: 1rem 0; /* Reduz o padding em telas pequenas */
+    }
+}
+
+#video-url, #download-type, button {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.site-icon {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.horizontal {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.img-invert {
+    filter: invert(1);
+}
