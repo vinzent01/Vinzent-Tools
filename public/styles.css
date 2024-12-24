@@ -205,6 +205,12 @@ button:hover {
     gap: 10px;
 }
 
+.vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .img-invert {
     filter: invert(1);
 }

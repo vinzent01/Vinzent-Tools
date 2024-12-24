@@ -1,0 +1,87 @@
+<style>
+    #filename-input {
+        border: none;
+        font-size: 18px;
+    }
+    .notepad {
+        height: 650px;
+    }
+    #text-content {
+        display: flex;
+        height: 100%;
+        box-sizing: border-box;
+        font-size: 18px;
+    }
+    button {
+        width: 80px;
+        margin-left: auto;
+    }
+    
+</style>
+
+
+
+<main>
+
+    <div class="container big notepad vertical center">
+        <h1>Bloco de Notas</h1>
+        <input id="filename-input" placeholder="Titulo">
+        <textarea id="text-content">Insira seu texto aqui...</textarea>
+        <button id="save-button">Salvar</button>
+    </div>
+
+    <section id="bloco-de-notas">
+        <h2>Bloco de Notas</h2>
+        
+        <p><strong>Sobre o Bloco de Notas</strong></p>
+        <p>O <strong>Bloco de Notas</strong> é uma ferramenta simples e prática para você escrever, editar e salvar textos de forma rápida e eficiente. Com uma interface limpa e fácil de usar, você pode anotar suas ideias, rascunhos ou qualquer outro conteúdo importante, e salvá-los no formato de arquivo <code>.txt</code>, o que facilita a portabilidade e o compartilhamento de seus documentos.</p>
+    
+        <p><strong>Funcionalidades</strong></p>
+        <ul>
+            <li><strong>Escrever e Editar Texto</strong>: Abra o aplicativo e comece a digitar sem complicações. A interface é amigável e você pode escrever de forma fluida.</li>
+            <li><strong>Salvar como .txt</strong>: Após terminar de escrever, você pode salvar o texto diretamente em um arquivo <code>.txt</code> no seu computador, para que possa acessá-lo a qualquer momento.</li>
+            <li><strong>Fácil Acesso</strong>: O arquivo <code>.txt</code> gerado pode ser aberto em qualquer editor de texto, como o Notepad, ou em qualquer sistema operacional, como Windows, macOS ou Linux.</li>
+        </ul>
+    
+        <p><strong>Como Funciona</strong></p>
+        <ol>
+            <li><strong>Digite seu Texto</strong>: Abra o Bloco de Notas e comece a escrever seu conteúdo diretamente no editor.</li>
+            <li><strong>Salvar o Arquivo</strong>: Quando terminar, basta clicar no botão "Salvar" e escolher o local no seu computador para armazenar o arquivo <code>.txt</code>.</li>
+            <li><strong>Acessar em Outros Dispositivos</strong>: Uma vez salvo, o arquivo pode ser facilmente transferido entre dispositivos ou compartilhado com outras pessoas.</li>
+        </ol>
+    
+        <p><strong>Use o Bloco de Notas para:</strong></p>
+        <ul>
+            <li>Anotar ideias importantes.</li>
+            <li>Criar listas de tarefas e lembretes.</li>
+            <li>Escrever rascunhos de textos, cartas ou documentos.</li>
+            <li>Armazenar informações de maneira simples e prática.</li>
+        </ul>
+    
+    </section>
+</main>
+
+<script>
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+
+    $("#save-button").click(() => {
+        let title = $("#filename-input").val();
+        const content = $("#text-content").val();
+
+        if (title == "")
+           title = "file.txt" 
+
+        download(title+".txt", content);
+    })
+</script>
