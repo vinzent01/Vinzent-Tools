@@ -9,6 +9,7 @@
     "html-uglify": "^1.2.1",
     "marked": "^15.0.4",
     "nodemon": "^3.1.9",
+    "ping": "^0.4.4",
     "prettyugly": "^0.0.5",
     "uglify-js": "^3.19.3"
   }

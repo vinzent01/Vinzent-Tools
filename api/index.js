@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const app = express();
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const compression = require("compression");
@@ -9,6 +8,12 @@ const exec = require("child_process").exec;
 
 const UglifyJS = require("uglify-js");
 const prettyugly = require('prettyugly');
+
+const app = express();
+
+app.use(cors({
+    origin: '*'
+}));
 
 app.use(express.static(path.join(__dirname,"..", 'public')));
 app.use(express.json());  // Middleware para interpretar o JSON no corpo das requisições
@@ -38,10 +43,13 @@ app.get('/', (req, res) => {
     const page = fs.readFileSync("public/pages/home.html").toString();
     const result = template.replace("{{ page }}", page);
 
+    res.header("test", "test2");
+
     res.send(result);
 });
 
-app.get('/*', (req, res) => {
+app.get('/*', (req, res)=> {
+
     const template = fs.readFileSync("public/template.html").toString();
     const page = fs.readFileSync(path.join("public/pages", req.url + ".html")).toString();
     const result = template.replace("{{ page }}", page);
@@ -105,8 +113,30 @@ app.post("/api/minify", (req, res) => {
             break;
 
     }
-
-
 })
+
+app.post('/ping', async (req, res) => {
+    let url = req.body.url;
+
+    console.log(url);
+
+    if (!url.startsWith("https://") || !url.startsWith("http://"))
+        url = "https://" + url;
+
+    if (!url) {
+        return res.status(400).json({ error: 'URL não fornecida' });
+    }
+
+    try {
+        const startTime = Date.now();
+        await fetch(url, { method: 'HEAD' }); // Faz a requisição do servidor
+        const endTime = Date.now();
+        const pingTime = endTime - startTime;
+
+        res.json({ pingTime }); // Retorna o tempo de ping
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
 module.exports = app;

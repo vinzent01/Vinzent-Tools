@@ -71,32 +71,47 @@
     
 </main>
 
-
 <script>
-    document.getElementById("ping-form").addEventListener("submit", function (event) {
+    async function ping(url) {
+        const response = await fetch(
+            `http://localhost:3000/ping`, 
+            {
+                "method" : "POST",
+                "headers" : {
+                    "Accept": "application/json",
+                    "Content-Type":  "application/json"
+                },
+                body : JSON.stringify({
+                    "url" : url
+                })
+            }
+        );
+
+        const data = await response.json();
+        return data;
+    }
+
+    $("#ping-form").on("submit", function (event) {
         event.preventDefault();
+
         const address = document.getElementById("ping-address").value;
         const resultElement = document.getElementById("ping-result");
         const data = JSON.stringify({address});
 
         resultElement.innerHTML = "Testando conexão...";
 
-        fetch("/api/ping", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: data,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    resultElement.innerHTML = `<pre>${data.output}</pre>`;
-                } else {
-                    resultElement.innerHTML = `<p style="color: red;">Erro: ${data.error}</p>`;
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                resultElement.innerHTML = "<p style='color: red;'>Erro ao conectar ao servidor.</p>";
-            });
+        (async () => {
+            const url = address;
+            const pingTime = (await ping(url)).pingTime;
+
+            if (pingTime !== undefined) {
+                console.log(`O ping para ${url} foi de ${pingTime}ms.`);
+                resultElement.innerHTML = `<pre>O ping para ${url} foi de ${pingTime}ms</pre>`;
+            } else {
+                console.log(`Não foi possível fazer ping para ${url}.`);
+                resultElement.innerHTML = `<p style="color: red;">Erro: Não foi possivel fazer ping para ${url}</p>`;
+            }
+        })();
+
     });
 </script>
