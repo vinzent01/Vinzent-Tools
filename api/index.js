@@ -9,6 +9,8 @@ const exec = require("child_process").exec;
 const UglifyJS = require("uglify-js");
 const prettyugly = require('prettyugly');
 
+const { Convert } = require("easy-currencies");
+
 const app = express();
 
 app.use(cors({
@@ -37,6 +39,30 @@ function minifyHTML(html) {
     return html;
 }
 
+
+
+app.get('/api/currencies', async (req, res) => {
+    const value = await Convert(1).from("USD").fetch();
+    const currencies = Object.keys(value.rates);
+
+    res.json(currencies);
+})
+
+app.post('/api/convert-currency', async (req, res) => {
+    const {from, to, amount } = req.body;
+
+    if (from == undefined || to == undefined || amount == undefined){
+        res.status(400).json({success : false, error : "Invalid body expecting from, to and amount values"});
+        return;
+    }
+
+    const value = await Convert(amount).from(from).to(to);
+
+    res.json({success : true, value : value})
+
+})
+
+module.exports = app;
 
 app.get('/', (req, res) => {
     const template = fs.readFileSync("public/template.html").toString();
@@ -138,5 +164,3 @@ app.post('/ping', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-module.exports = app;

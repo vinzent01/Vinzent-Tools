@@ -222,3 +222,19 @@ select {
     border-radius: 5px;
     padding-left: 10px;
 }
+
+button {
+    display: block;
+}
+
+.right {
+    margin-left: auto;
+}
+
+select {
+    border-radius: 5px;
+}
+
+.medium-font > *{
+    font-size: 18px;
+}

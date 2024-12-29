@@ -1,0 +1,119 @@
+<main>
+    <div class="container md center">
+        <h1>Conversor de Moedas</h1>
+        <div class="loading" id="loadingMessage">Carregando moedas...</div>
+        
+        <div class="vertical medium-font">
+            <div>
+                <label for="fromCurrency">De:</label>
+                <select id="fromCurrency"></select>
+            
+                <label for="toCurrency">Para:</label>
+                <select id="toCurrency"></select>
+    
+            </div>
+    
+            <div>
+                <label for="amount">Valor:</label>
+                <input type="number" id="amount" placeholder="Digite o valor" />
+            
+                <button class="right" onclick="convertCurrency()">Converter</button>
+            
+                <div class="result" id="result"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" id="aboutSection">
+        <h2>Sobre o Conversor de Moedas</h2>
+        <p>O nosso conversor de moedas online é uma ferramenta simples e eficiente para converter valores entre diferentes moedas em tempo real. Seja você um viajante, empresário, ou apenas alguém que precisa de uma conversão de câmbio precisa, nossa ferramenta oferece a solução que você precisa.</p>
+        <p>Com acesso a taxas de câmbio atualizadas, o conversor oferece uma conversão precisa entre as moedas mais utilizadas no mundo. Através de uma interface simples, você pode facilmente selecionar a moeda de origem, a moeda de destino e inserir o valor desejado para saber o valor correspondente em outra moeda.</p>
+        <p>Não importa se você está planejando uma viagem internacional, fazendo negócios com parceiros estrangeiros, ou apenas curioso sobre as taxas de câmbio, nossa ferramenta de conversão é rápida, confiável e gratuita.</p>
+        <h3>Como Funciona?</h3>
+        <p>Este conversor utiliza taxas de câmbio ao vivo de fontes confiáveis para calcular a conversão exata. Ao selecionar as moedas de origem e destino, e inserir o valor desejado, o conversor realiza uma requisição à nossa API de câmbio e retorna o valor convertido. O cálculo é feito de forma rápida e precisa, oferecendo a melhor experiência de usuário.</p>
+        <p>Além disso, a ferramenta é simples de usar, sem a necessidade de cadastro ou login. Basta escolher as moedas, digitar o valor e clicar em "Converter" para ver o resultado. O conversor funciona diretamente no seu navegador, sem necessidade de instalação de softwares adicionais.</p>
+    </div>
+</main>
+
+
+<script>
+    let currencies = [];
+
+    // Função para carregar as moedas disponíveis
+    async function loadCurrencies() {
+        try {
+            const response = await fetch('/api/currencies');
+            if (response.ok) {
+                currencies = await response.json();
+                populateCurrencySelectors();
+                document.getElementById('loadingMessage').style.display = 'none';
+            } else {
+                throw new Error('Erro ao carregar moedas');
+            }
+        } catch (error) {
+            document.getElementById('loadingMessage').innerText = 'Erro ao carregar moedas. Tente novamente.';
+            console.error(error);
+        }
+    }
+
+    // Função para preencher os select boxes com as moedas
+    function populateCurrencySelectors() {
+        const fromCurrencySelect = document.getElementById('fromCurrency');
+        const toCurrencySelect = document.getElementById('toCurrency');
+        
+        currencies.forEach(currency => {
+            const optionFrom = document.createElement('option');
+            optionFrom.value = currency;
+            optionFrom.textContent = currency;
+
+            const optionTo = document.createElement('option');
+            optionTo.value = currency;
+            optionTo.textContent = currency;
+
+            fromCurrencySelect.appendChild(optionFrom);
+            toCurrencySelect.appendChild(optionTo);
+        });
+    }
+
+    // Função para realizar a conversão de moeda
+    async function convertCurrency() {
+        const from = document.getElementById('fromCurrency').value;
+        const to = document.getElementById('toCurrency').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+
+        if (!from || !to || !amount || isNaN(amount)) {
+            alert('Por favor, preencha todos os campos corretamente!');
+            return;
+        }
+
+        document.getElementById('result').innerText = 'Calculando...';
+        try {
+            const response = await fetch(
+                `/api/convert-currency`, 
+                {
+                    body : JSON.stringify({
+                        from : from,
+                        to : to,
+                        amount : amount
+                    }),
+                    method : "POST",
+                    headers : {
+                        "Content-Type" : "application/json"
+                    }
+                }
+            );
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('result').innerText = `${amount} ${from} é igual a ${result.value} ${to}`;
+            } else {
+                throw new Error('Erro na conversão');
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = 'Erro na conversão. Tente novamente.';
+            console.error(error);
+        }
+    }
+
+    // Carregar as moedas assim que a página for carregada
+    window.onload = loadCurrencies;
+</script>

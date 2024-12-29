@@ -4,6 +4,7 @@
     "body-parser": "^1.20.3",
     "compression": "^1.7.5",
     "cors": "^2.8.5",
+    "easy-currencies": "^1.8.1",
     "express": "^4.21.2",
     "html-minifier": "^4.0.0",
     "html-uglify": "^1.2.1",
@@ -14,7 +15,7 @@
     "uglify-js": "^3.19.3"
   },
   "scripts": {
-    "dev" : "npx nodemon",
-    "start" : "node index.js"
+    "dev": "npx nodemon",
+    "start": "node index.js"
   }
 }
